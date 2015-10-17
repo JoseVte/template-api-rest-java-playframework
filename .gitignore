@@ -1,0 +1,13 @@
+logs
+target
+.DS_Store
+Thumbs.db
+/.vagrant
+/.sbtserver
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+*.log
