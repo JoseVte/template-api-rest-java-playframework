@@ -3,9 +3,11 @@ API REST for JAVA Play Framework
 
 -----
 
-Welcome to a API REST with Play Framework in JAVA
+Welcome to a API REST with Play Framework in JAVA.
 
-For test the API you can use the file extracted from PostMan or use these URIs in your Rest Client
+For test the API you can use the file extracted from PostMan or use these URIs in your Rest Client.
+
+All routes have the port  80. This can be changed in `application.conf` file.
 
 
 | Method | URI | Data | HTTP Code | Response (in JSON) |

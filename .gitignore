@@ -11,3 +11,5 @@ Thumbs.db
 /.settings
 /RUNNING_PID
 *.log
+etc
+Vagrantfile
