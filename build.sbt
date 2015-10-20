@@ -1,19 +1,20 @@
 name := "template-api-rest-java-playframework"
 
-version := "1.0"
+version := "1.1"
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
+lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
-  javaJdbc,
-  evolutions
+  javaJpa,
+  "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final",
+  "mysql" % "mysql-connector-java" % "5.1.18",
+  "org.dbunit" % "dbunit" % "2.4.9",
+  cache,
+  javaWs
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
-
-
-fork in run := true

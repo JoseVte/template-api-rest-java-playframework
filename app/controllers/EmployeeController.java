@@ -1,15 +1,16 @@
 package controllers;
 
-import play.mvc.*;
-import play.data.*;
-import static play.data.Form.*;
+import java.util.List;
+
 import play.libs.Json;
-import java.util.*;
-import models.*;
-
-import models.*;
-
+import play.*;
+import play.mvc.*;
 import views.html.*;
+import static play.libs.Json.*;
+import play.data.Form;
+import play.db.jpa.*;
+
+import models.*;
 
 public class EmployeeController extends Controller {
     static Form<Employee> employeeForm = Form.form(Employee.class);
@@ -23,44 +24,47 @@ public class EmployeeController extends Controller {
         return ok(index.render("API REST for JAVA Play Framework"));
     }
 
-    public Result list(Integer page) {
-        List models = Employee.find.all();
+    @Transactional(readOnly = true)
+    public Result list(Integer page, Integer size) {
+        List models = EmployeeService.pageEmployee(page-1, size);
         return jsonResult(ok(Json.toJson(models)));
     }
 
-    public Result get(Long id) {
-        Employee employee = Employee.find.byId(id);
+    @Transactional(readOnly = true)
+    public Result get(Integer id) {
+        Employee employee = EmployeeService.find(id);
         if (employee == null ) {
             return jsonResult(notFound(Json.toJson("Not found " + id)));
         }
         return jsonResult(ok(Json.toJson(employee)));
     }
 
+    @Transactional
     public Result create() {
         Form<Employee> employee = employeeForm.bindFromRequest();
         if (employee.hasErrors()) {
             return jsonResult(badRequest(employee.errorsAsJson()));
         }
-        employee.get().save();
-        return jsonResult(created(Json.toJson(employee.get())));
+        Employee newEmployee = EmployeeService.create(employee.get());
+        return jsonResult(created(Json.toJson(newEmployee)));
     }
 
+    @Transactional
     public Result update() {
         Form<Employee> employee = employeeForm.bindFromRequest();
         if (employee.hasErrors()) {
             return jsonResult(badRequest(employee.errorsAsJson()));
         }
-        employee.get().update();
-        return jsonResult(ok(Json.toJson(employee.get())));
+        Employee updatedEmployee = EmployeeService.update(employee.get());
+        return jsonResult(ok(Json.toJson(updatedEmployee)));
     }
 
-    public Result delete(Long id) {
-        Employee employee = Employee.find.byId(id);
-        if (employee == null) {
-            return jsonResult(notFound(Json.toJson("Not found " + id)));
+    @Transactional
+    public Result delete(Integer id) {
+        if (EmployeeService.delete(id)) {
+            return jsonResult(ok(Json.toJson("Deleted " + id)));
         }
-        employee.delete();
-        return jsonResult(ok(Json.toJson("Deleted " + id)));
+        return jsonResult(notFound(Json.toJson("Not found " + id)));
     }
 
 }

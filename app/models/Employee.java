@@ -1,41 +1,49 @@
 package models;
 
-import java.util.*;
 import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.data.format.*;
 
-import com.avaje.ebean.Model;
-import play.data.validation.*;
-
-import com.avaje.ebean.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @Entity
 public class Employee extends Model {
-    private static final long serialVersionUID = 1L;
+    public static String TABLE = "Employee";
 
     @Id
-    public Long id;
-    
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    public Integer id;
+
     @Constraints.Required
     public String name;
 
-    /**
-     * Generic query helper for entity Employee with id Long
-     */
-    public static Finder<Long,Employee> find = new Finder<>(Employee.class);
-
-    public long getId() {
-        return id;
+    public void emptyToNull() {
+        if (name != null && name.isEmpty()) name = null;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Employee aux = (Employee) obj;
+
+        if (id != null && aux.id != null)
+            return (id == aux.id);
+        else
+            return (name.equals(aux.name));
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result +
+            ((id == null) ? 0 : id);
+        result = prime * result + name.hashCode();
+        return result;
     }
 }
