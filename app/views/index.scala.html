@@ -5,7 +5,7 @@
     <hr>
     <p>Welcome to a API REST with Play Framework in JAVA</p>
     <p>For test the API you can use the file extracted from PostMan or use these URIs in your Rest Client</p>
-    <table>
+    <table class="table table-bordered table-hover table-condensed">
         <tr>
             <th>Method</th>
             <th>URI</th>
@@ -18,7 +18,7 @@
             <td>/employees</td>
             <td></td>
             <td>200</td>
-            <td>[{"id": 1,"name": "Josrom"},{"id": 2,"name": "Dantar"},...]</td>
+            <td>{"data":[{"id": 4,"name": "Josrom"},{"id": 4,"name": "Dantar"},...],"total":∞,"link-self": "/employees?page=2","link-prev": "/employees?page=1","link-next": "/employees?page=3"}</td>
         </tr>
         <tr>
             <td>GET</td>
@@ -32,7 +32,7 @@
             <td>/employees/6</td>
             <td></td>
             <td>404</td>
-            <td>"Not found 6"</td>
+            <td>{"error":"Not found 6"}</td>
         </tr>
         <tr>
             <td>POST</td>
@@ -67,15 +67,29 @@
             <td>/employees/1</td>
             <td></td>
             <td>200</td>
-            <td>"Deleted 1"</td>
+            <td>{"msg":"Deleted 1"}</td>
         </tr>
         <tr>
             <td>DELETE</td>
             <td>/employees/0</td>
             <td></td>
             <td>404</td>
-            <td>"Not found 0"</td>
+            <td>{"error":"Not found 0"}</td>
         </tr>
     </table>
-
+    <hr>
+    <h3>CHANGELOG</h3>
+    <ul>
+        <li><h4>Version 1.1</h4></li>
+        <li><ul>
+            <li>Changed Ebean ORM for JPA</li>
+            <li>Added pagination</li>
+            <li>Docblocks for all methods</li>
+            <li>Added test</li>
+        </ul></li>
+        <li><h4>Version 1.0</h4></li>
+        <li><ul>
+            <li>App base</li>
+        </ul></li>
+    </ul>
 }
