@@ -32,8 +32,12 @@ public class EmployeeService
     public static List<? extends Model> all() {
         return EmployeeDAO.all();
     }
-    
+
     public static List<? extends Model> pageEmployee(Integer page, Integer size) {
         return EmployeeDAO.paginate(page, size);
+    }
+
+    public static Long count() {
+        return EmployeeDAO.count();
     }
 }

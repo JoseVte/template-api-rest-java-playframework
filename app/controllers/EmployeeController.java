@@ -2,15 +2,17 @@ package controllers;
 
 import java.util.List;
 
-import play.libs.Json;
 import play.*;
 import play.mvc.*;
 import views.html.*;
-import static play.libs.Json.*;
+import play.libs.Json;
+import play.libs.Json.*;
 import play.data.Form;
 import play.db.jpa.*;
 
 import models.*;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class EmployeeController extends Controller {
     static Form<Employee> employeeForm = Form.form(Employee.class);
@@ -27,7 +29,16 @@ public class EmployeeController extends Controller {
     @Transactional(readOnly = true)
     public Result list(Integer page, Integer size) {
         List models = EmployeeService.pageEmployee(page-1, size);
-        return jsonResult(ok(Json.toJson(models)));
+        Long count = EmployeeService.count();
+
+        ObjectNode result = Json.newObject();
+        result.put("data", Json.toJson(models));
+        result.put("total", count);
+        if (page > 1) result.put("link-prev", routes.EmployeeController.list(page-1, size).toString());
+        if (page*size < count) result.put("link-next", routes.EmployeeController.list(page+1, size).toString());
+        result.put("link-self", routes.EmployeeController.list(page, size).toString());
+
+        return jsonResult(ok(result));
     }
 
     @Transactional(readOnly = true)

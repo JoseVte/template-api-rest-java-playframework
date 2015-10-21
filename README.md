@@ -21,3 +21,12 @@ All routes have the port  80. This can be changed in `application.conf` file.
 | PUT/PATCH | /employees |  | 400 | {"name": ["This field is required"]} |
 | DELETE | /employees/1 |  | 200 | "Deleted 1" |
 | DELETE | /employees/0 |  | 404 | "Not found 0" |
+
+CHANGELOG
+---------
+
+Version 1.1
+
+- Changed Ebean ORM for JPA
+- Added pagination
+- 

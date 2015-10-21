@@ -38,4 +38,8 @@ public class EmployeeDAO {
     public static List<Employee> paginate(Integer page, Integer size) {
         return (List<Employee>) JPA.em().createQuery("SELECT m FROM " + Employee.TABLE + " m ORDER BY id").setFirstResult(page*size).setMaxResults(size).getResultList();
     }
+
+    public static Long count() {
+        return (Long) JPA.em().createQuery("SELECT count(m) FROM " + Employee.TABLE + " m").getSingleResult();
+    }
 }
