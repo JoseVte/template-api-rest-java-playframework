@@ -72,7 +72,9 @@ public class EmployeeController extends Controller {
     public Result get(Integer id) {
         Employee employee = EmployeeService.find(id);
         if (employee == null ) {
-            return jsonResult(notFound(Json.toJson("Not found " + id)));
+            ObjectNode result = Json.newObject();
+            result.put("error", "Not found " + id);
+            return jsonResult(notFound(result));
         }
         return jsonResult(ok(Json.toJson(employee)));
     }
@@ -117,8 +119,12 @@ public class EmployeeController extends Controller {
     @Transactional
     public Result delete(Integer id) {
         if (EmployeeService.delete(id)) {
-            return jsonResult(ok(Json.toJson("Deleted " + id)));
+            ObjectNode result = Json.newObject();
+            result.put("msg", "Deleted " + id);
+            return jsonResult(ok(result));
         }
-        return jsonResult(notFound(Json.toJson("Not found " + id)));
+        ObjectNode result = Json.newObject();
+        result.put("error", "Not found " + id);
+        return jsonResult(notFound(result));
     }
 }

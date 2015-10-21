@@ -3,7 +3,8 @@ target
 .DS_Store
 Thumbs.db
 /.vagrant
-/.sbtserver
+.sbtserver
+.sbtserver.lock
 /.idea
 /.idea_modules
 /.classpath
