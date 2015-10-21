@@ -16,7 +16,6 @@ EOF
 )
 echo "${DNS}" > /etc/resolv.conf
 
-
 #variables
 activatorVersion="1.3.5"
 sbtVersion="0.13.9"

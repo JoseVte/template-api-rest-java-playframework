@@ -29,4 +29,5 @@ Version 1.1
 
 - Changed Ebean ORM for JPA
 - Added pagination
-- 
+- Docblocks for all methods
+- Added test

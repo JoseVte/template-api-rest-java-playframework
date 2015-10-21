@@ -23,18 +23,23 @@ Vagrant.configure(2) do |config|
   end
   config.vm.synced_folder ".", "/vagrant", :id => "vagrant-root", :owner => "www-data"
 
-  config.vm.define :apirecetariocom do |t|
+  config.vm.define :templatejava do |t|
+  end
+
+  config.vm.provision "puppet" do |puppet|
+    puppet.module_path = "etc/vagrant/modules"
+    puppet.manifests_path = "etc/vagrant/manifests"
+    puppet.manifest_file  = "main.pp"
   end
 
   config.vm.provider "virtualbox" do |v|
-# max 75% CPU cap
-v.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
-v.cpus = 2
-v.gui = true
-# give vm max 3GB ram
-v.memory = 3072
-end
+    # max 75% CPU cap
+    v.customize ["modifyvm", :id, "--cpuexecutioncap", "75"]
+    v.cpus = 2
+    # give vm max 3GB ram
+    v.memory = 3072
+  end
 
-config.vm.provision "shell", path: "etc/vagrant/scripts/setup.sh"
-config.vm.provision :hostmanager
+  config.vm.provision "shell", path: "etc/vagrant/scripts/setup.sh"
+  config.vm.provision :hostmanager
 end

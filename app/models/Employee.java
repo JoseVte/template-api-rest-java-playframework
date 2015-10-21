@@ -8,8 +8,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 @Entity
-public class Employee extends Model {
-    public static String TABLE = "Employee";
+public class Employee {
+    public static String TABLE = Employee.class.getSimpleName();
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -18,6 +18,11 @@ public class Employee extends Model {
     @Constraints.Required
     public String name;
 
+    public Employee(String name) { this.name = name; }
+
+    /**
+     * Set all empty values to null
+     */
     public void emptyToNull() {
         if (name != null && name.isEmpty()) name = null;
     }
